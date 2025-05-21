@@ -67,7 +67,7 @@ upload:
   channel: github
 
   github:
-    token:
+    token: xxxxxxxxxxxxxxxxxxxxxxx
     username: youtatu-hub
     repos: photo
     repos-path: /column/assets

@@ -71,7 +71,7 @@ upload:
     resources-locations: file:${upload.file.path}
 
   github:
-    token:
+    token: xxxxxxxxx
     username: youtatu-hub
     repos: photo
     repos-path: /column/assets
