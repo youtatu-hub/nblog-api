@@ -1,0 +1,84 @@
+blog:
+  name: "Youta's Blog"
+  api: "http://localhost:${server.port}"
+  cms: "http://localhost:8080"
+  view: "http://localhost:8081"
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/nblog?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+  redis:
+    host: 127.0.0.1
+    password: root
+    port: 6379
+    database: 0
+    timeout: 10000ms
+
+  mail:
+    host: smtp.mxhichina.com
+    port: 465
+    username: admin@example.com
+    password: 123456
+    properties:
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.ssl.enable: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    top.naccl: debug
+  file: blog-api/log/blog-dev
+
+token:
+  expireTime: 259200000
+  secretKey: "abcdefghijklmnopqrstuvwxyz"
+
+comment:
+  notify:
+    channel: mail
+  default-open: true
+
+tg:
+  bot:
+    api: "https://api.telegram.org/bot"
+    token: "1234567890:qwertyuiopasdfghjklzxcvbnm"
+    chat-id: 1234567890
+    use-proxy: false
+    use-reverse-proxy: true
+    reverse-proxy-url: "https://tg-api-open.naccl.workers.dev"
+
+http:
+  proxy:
+    server:
+      host: 127.0.0.1
+      port: 7890
+      timeout: 10000
+
+upload:
+  channel: github
+  file:
+    path: /Users/naccl/Desktop/upload/
+    access-path: /image/**
+    resources-locations: file:${upload.file.path}
+
+  github:
+    token:
+    username: youtatu-hub
+    repos: photo
+    repos-path: /column/assets
+
+  upyun:
+    bucket-name: nblog
+    username: naccl
+    password: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    path: /comment/avatar
+    domain: "https://cdn.example.com"

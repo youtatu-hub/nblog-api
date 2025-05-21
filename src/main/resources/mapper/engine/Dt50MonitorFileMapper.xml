@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.net.perfect.storage.domain.engine.mapper.Dt50MonitorFileMapper">
+
+    <resultMap id="Dt50MonitorFileResult" type="cn.net.perfect.storage.domain.engine.po.Dt50MonitorFilePO">
+        <result column="file_start_time" property="fileStartTime"/>
+        <result column="file_end_time" property="fileEndTime"/>
+        <result column="train_order" property="trainOrder"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="terminal_id" property="terminalId"/>
+        <result column="driver_id" property="driverId"/>
+        <result column="vice_driver_id" property="viceDriverId"/>
+        <result column="transport_category" property="transportCategory"/>
+        <result column="file_length" property="fileLength"/>
+        <result column="file_name" property="fileName"/>
+        <result column="total_weight" property="totalWeight"/>
+        <result column="load_weight" property="loadWeight"/>
+        <result column="calculated_length" property="calculatedLength"/>
+        <result column="number_of_vehicles" property="numberOfVehicles"/>
+        <result column="monitoring_device_number" property="monitoringDeviceNumber"/>
+        <result column="start_station_number" property="startStationNumber"/>
+        <result column="start_transfer_number" property="startTransferNumber"/>
+        <result column="end_station_number" property="endStationNumber"/>
+        <result column="end_transfer_number" property="endTransferNumber"/>
+        <result column="download_times" property="downloadTimes"/>
+        <result column="mileage" property="mileage"/>
+        <result column="file_id" property="fileId"/>
+        <result column="main_wheel_diameter" property="mainWheelDiameter"/>
+        <result column="vice_wheel_diameter" property="viceWheelDiameter"/>
+        <result column="status_value" property="statusValue"/>
+        <result column="receive_time" property="receiveTime"/>
+        <result column="is_error" property="isError"/>
+        <result column="is_check_item" property="isCheckItem"/>
+        <result column="lkj_type" property="lkjType"/>
+        <result column="interval_value" property="intervalValue"/>
+        <result column="stat_status" property="statStatus"/>
+        <result column="item_num1" property="itemNum1"/>
+        <result column="item_num2" property="itemNum2"/>
+        <result column="stat_time" property="statTime"/>
+        <result column="train_type_id" property="trainTypeId"/>
+        <result column="train_id" property="trainId"/>
+    </resultMap>
+
+    <!-- 批量插入数据 -->
+    <insert id="insertMonitorFile" parameterType="java.util.List">
+        INSERT INTO monitor_file_${monitorFileList[0].trainTypeId}_${monitorFileList[0].trainId}
+        (file_start_time, file_end_time, train_order, dept_id, terminal_id, driver_id, vice_driver_id, transport_category, file_length, file_name, total_weight, load_weight, calculated_length, number_of_vehicles, monitoring_device_number, start_station_number, start_transfer_number, end_station_number, end_transfer_number, download_times, mileage, file_id, main_wheel_diameter, vice_wheel_diameter, status_value, receive_time, is_error, is_check_item, lkj_type, interval_value )
+        USING monitor_file
+        TAGS (#{monitorFileList[0].trainTypeId}, #{monitorFileList[0].trainId})
+        VALUES
+        <foreach collection="monitorFileList" item="item" separator=",">
+            (
+            #{item.fileStartTime},
+            #{item.fileEndTime},
+            #{item.trainOrder},
+            #{item.deptId},
+            #{item.terminalId},
+            #{item.driverId},
+            #{item.viceDriverId},
+            #{item.transportCategory},
+            #{item.fileLength},
+            #{item.fileName},
+            #{item.totalWeight},
+            #{item.loadWeight},
+            #{item.calculatedLength},
+            #{item.numberOfVehicles},
+            #{item.monitoringDeviceNumber},
+            #{item.startStationNumber},
+            #{item.startTransferNumber},
+            #{item.endStationNumber},
+            #{item.endTransferNumber},
+            #{item.downloadTimes},
+            #{item.mileage},
+            #{item.fileId},
+            #{item.mainWheelDiameter},
+            #{item.viceWheelDiameter},
+            #{item.statusValue},
+            #{item.receiveTime},
+            #{item.isError},
+            #{item.isCheckItem},
+            #{item.lkjType},
+            #{item.intervalValue}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="cn.net.perfect.storage.domain.engine.po.Dt50MonitorFilePO">
+        INSERT INTO monitor_file_${trainTypeId}_${trainId} (file_start_time, stat_status, item_num1 , item_num2, stat_time)
+        VALUES (#{fileStartTime}, #{statStatus}, #{itemNum1}, #{itemNum2}, #{statTime})
+    </update>
+
+
+    <select id="selectMonitorFile" resultMap="Dt50MonitorFileResult">
+        SELECT
+            file_start_time, file_end_time, train_order, dept_id, terminal_id, driver_id, vice_driver_id, transport_category,
+            file_length, file_name, total_weight, load_weight, calculated_length,number_of_vehicles, monitoring_device_number,
+            start_station_number, start_transfer_number, end_station_number, end_transfer_number, download_times,
+            mileage, file_id, main_wheel_diameter, vice_wheel_diameter,status_value, receive_time, is_error, is_check_item,
+            lkj_type, interval_value, stat_status, item_num1, item_num2, stat_time, train_type_id, train_id
+        FROM `monitor_file`
+        <where>
+            <if test="dto.trainTypeId != null">
+                AND train_type_id = #{dto.trainTypeId}
+            </if>
+            <if test="dto.trainId != null">
+                AND train_id = #{dto.trainId}
+            </if>
+            <if test="dto.fileStartTime != null">
+                <![CDATA[ AND file_start_time >= #{dto.fileStartTime} ]]>
+            </if>
+            <if test="dto.fileEndTime != null">
+                <![CDATA[ AND file_end_time <= #{dto.fileEndTime} ]]>
+            </if>
+        </where>
+        ORDER BY file_start_time DESC
+    </select>
+
+</mapper>

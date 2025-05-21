@@ -19,8 +19,8 @@ public class Dt50OnlineLogBatch {
 
     @JmsListener(destination = msgType, containerFactory = "jmsQueueListenerContainerFactory")
     public void receiveTopic(String text) {
-        //tid:timestamp  # 设备号 ASCII_3A分隔 时间戳
-        String[] values = text.split(",");
+        //tid:timestamp  # 设备号 ASCII_3A分隔 时间戳(毫秒)
+        String[] values = text.split(":");
         String tid = values[0];
         String timestamp = values[1];
         Dt50OnlineHistory onlineHistory = new Dt50OnlineHistory();

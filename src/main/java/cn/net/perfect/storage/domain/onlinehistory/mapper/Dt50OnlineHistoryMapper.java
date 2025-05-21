@@ -15,6 +15,9 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface Dt50OnlineHistoryMapper extends BaseMapper<Dt50OnlineHistory> {
 
+    //==>  Preparing: INSERT INTO online_histroy_log_t26507 USING online_histroy_log TAGS (?) VALUES (?, ?, ?, ?, ?)
+    //==> Parameters: 26507(Long), 1(Long), -28800000(Long), 1709711133730(Long), 1(Integer), 1(Integer)
+
     @Insert("INSERT INTO online_histroy_log_t${tid} USING online_histroy_log TAGS (#{tid}) VALUES (#{logTime}, #{logDay}, #{insertTime}, #{onlineStatus}, #{dataType})")
     int insertOne(Dt50OnlineHistory onlineHistory);
 

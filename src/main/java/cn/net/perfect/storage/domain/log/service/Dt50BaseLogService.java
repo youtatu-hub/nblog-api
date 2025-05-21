@@ -6,12 +6,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
+
 /**
  * @author ChangLee
  */
-public interface Dt50BaseLogServive {
+public interface Dt50BaseLogService {
 
     boolean saveLog(Dt50BaseLog baseLog);
 
-    List<Dt50BaseLog> getList(Dt50BaseLogDTO dto);
+    Page<Dt50BaseLog> getPageList(Dt50BaseLogDTO dto);
+
+    /**
+     * 获得终端数据间隔的时间信息
+     */
+    List<String> getTerminalDataInterval(Dt50BaseLogDTO dto);
+
 }

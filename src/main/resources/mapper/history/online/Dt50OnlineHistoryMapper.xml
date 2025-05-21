@@ -12,10 +12,11 @@
 
     <select id="getTerminalHistoryOnlineDays" resultMap="Dt50OnlineHistoryResult">
         select
-            tid, log_day, online_status
+            distinct tid, log_day, online_status
         from online_histroy_log
         <where>
             1 = 1
+            and log_day >= TODAY() - 15d
             and tid in
             <foreach collection="query.terminalIdList" item="item" open="(" separator="," close=")">
                 #{item}

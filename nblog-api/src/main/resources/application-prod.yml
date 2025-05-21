@@ -1,0 +1,73 @@
+blog:
+  name: "Youta's Blog"
+  api: "https://api.youta.us.kg"
+  cms: "https://admin.youta.us.kg"
+  view: "https://www.youta.us.kg"
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/nblog?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Qwe584131421
+
+  redis:
+    host: redis
+    password: Qwe584131421
+    port: 6379
+    database: 0
+    timeout: 10000ms
+
+  mail:
+    host: smtp.mxhichina.com
+    port: 465
+    username: admin@example.com
+    password: 123456
+    properties:
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.ssl.enable: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    top.naccl: info
+  file: blog-api/log/blog-prod
+
+token:
+  expireTime: 259200000
+  secretKey: "abcdefghijklmnopqrstuvwxyz"
+
+comment:
+  notify:
+    channel: mail
+  default-open: true
+
+tg:
+  bot:
+    api: "https://api.telegram.org/bot"
+    token: "1234567890:qwertyuiopasdfghjklzxcvbnm"
+    chat-id: 1234567890
+    use-proxy: false
+    use-reverse-proxy: true
+    reverse-proxy-url: "https://tg-api-open.naccl.workers.dev"
+
+http:
+  proxy:
+    server:
+      host: 127.0.0.1
+      port: 7890
+      timeout: 10000
+
+upload:
+  channel: github
+
+  github:
+    token:
+    username: youtatu-hub
+    repos: photo
+    repos-path: /column/assets

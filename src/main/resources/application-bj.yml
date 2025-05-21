@@ -1,12 +1,27 @@
 server:
   port: 20553
-
+  servlet:
+    context-path: /storage
+  # undertow 配置
+  undertow:
+    # HTTP post内容的最大大小。当值为-1时，默认值为大小是无限的
+    max-http-post-size: -1
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 512
+    # 是否分配的直接内存
+    direct-buffers: true
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 8
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 256
 spring:
   datasource:
     driver-class-name: com.taosdata.jdbc.TSDBDriver
-    url: jdbc:TAOS://192.168.0.41:6030/dt50?charset=UTF-8&locale=en_US.UTF-8&timezone=UTC-8
+    url: jdbc:TAOS://127.0.0.1:6030/dt50?charset=UTF-8&locale=en_US.UTF-8&timezone=UTC-8
     username: root
-    password: taosdata
+    password: Bofei@tdengine.com
 
     hikari:
       connection-timeout: 30000
@@ -38,7 +53,7 @@ spring:
   #配置activemq
   activemq:
     #activemq的url
-    broker-url: tcp://192.168.0.41:61616
+    broker-url: tcp://192.168.0.41:21616
     #broker-url: tcp://127.0.0.1:61616
     #用户名
     user: perfectMq

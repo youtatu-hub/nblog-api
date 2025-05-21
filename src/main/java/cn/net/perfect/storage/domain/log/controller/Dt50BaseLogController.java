@@ -2,14 +2,10 @@ package cn.net.perfect.storage.domain.log.controller;
 
 import cn.net.perfect.storage.domain.log.DTO.Dt50BaseLogDTO;
 import cn.net.perfect.storage.domain.log.po.Dt50BaseLog;
-import cn.net.perfect.storage.domain.log.service.Dt50BaseLogServive;
-import cn.net.perfect.storage.util.R;
+import cn.net.perfect.storage.domain.log.service.Dt50BaseLogService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,11 +13,11 @@ import java.util.List;
  * @author ChangLee
  */
 @RestController
-@RequestMapping("/dt50/base/log")
+@RequestMapping("/terminal/base/log")
 public class Dt50BaseLogController {
 
     @Autowired
-    private Dt50BaseLogServive dt50BaseLogServive;
+    private Dt50BaseLogService dt50BaseLogServive;
 
     @PostMapping("/save")
     public String saveLog() {
@@ -37,8 +33,15 @@ public class Dt50BaseLogController {
     }
 
     @PostMapping("/pageList")
-    public List<Dt50BaseLog> pageList(@RequestBody Dt50BaseLogDTO queryDto) {
-        return dt50BaseLogServive.getList(queryDto);
+    public Page<Dt50BaseLog> pageList(@RequestBody Dt50BaseLogDTO queryDto) {
+        return dt50BaseLogServive.getPageList(queryDto);
+    }
+
+    @PostMapping("/getDataInterval")
+    public List<String> getTerminalDataInterval(@RequestBody Dt50BaseLogDTO queryDto) {
+        queryDto.setStartTime(System.currentTimeMillis() - 60 * 60 * 24 * 7 * 1000);
+        queryDto.setEndTime(System.currentTimeMillis());
+        return dt50BaseLogServive.getTerminalDataInterval(queryDto);
     }
 
 
